@@ -1,0 +1,33 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+    "name": "Drupal-theming",
+    "image": "node:14",
+
+    // Set *default* container specific settings.json values on container create.
+    "settings": {
+      "terminal.integrated.shell.linux": "/bin/bash"
+    },
+
+    // Add the IDs of extensions you want installed when the container is created.
+    "extensions": [
+      "whatwedo.twig",
+      "dmitrydorofeev.empty-indent",
+      "mrmlnc.vscode-scss",
+      "irongeek.vscode-env",
+      "dbaeumer.vscode-eslint"
+    ],
+
+    // Use 'forwardPorts' to make a list of ports inside the container available locally.
+    "forwardPorts": [],
+    "appPort": [],
+
+    // Use 'postCreateCommand' to run commands after the container is created.
+    "postCreateCommand": "npm install --global gulp-cli && npm install",
+
+    // Watch SASS file change.
+    "postAttachCommand": "gulp",
+
+    // Reference env variables in a dedicated file.
+    // Also specify the project default network.
+    "runArgs": []
+  }
