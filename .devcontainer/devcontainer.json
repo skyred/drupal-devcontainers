@@ -8,7 +8,47 @@
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
-    "php.validate.executablePath": "/usr/local/bin/php"
+    "php.validate.executablePath": "/usr/local/bin/php",
+    /* https://www.drupal.org/docs/develop/development-tools/configuring-visual-studio-code */
+    "breadcrumbs.enabled": true,
+    "css.validate": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": false,
+    "editor.renderWhitespace": "boundary",
+    "editor.wordWrapColumn": 80,
+    "editor.wordWrap": "off",
+    "editor.detectIndentation": true,
+    "editor.rulers": [
+      80
+    ],
+    "files.associations": {
+      "*.inc": "php",
+      "*.module": "php",
+      "*.install": "php",
+      "*.theme": "php",
+      "*.tpl.php": "php",
+      "*.test": "php",
+      "*.php": "php",
+      "*.info": "ini"
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "html.format.enable": true,
+    "html.format.wrapLineLength": 80,
+    "telemetry.enableTelemetry": false,
+    /* Empty Indent */
+    "emptyIndent.removeIndent": true,
+    "emptyIndent.highlightIndent": false,
+    "emptyIndent.highlightColor": "rgba(246,36,89,0.6)",
+    /* PHPCS */
+    "phpcs.enable": true,
+    "phpcs.standard": "Drupal,DrupalPractice",
+    /* PHP Docblocks */
+    "php-docblocker.gap": true,
+    "php-docblocker.useShortNames": true
   },
 
   // Add the IDs of extensions you want installed when the container is created.
@@ -41,7 +81,7 @@
   "workspaceFolder": "/opt/drupal",
 
   // Create a default network for the project if it doesn't exist.
-  "initializeCommand": "docker network create ${workspaceFolderBasename} || true",
+  "initializeCommand": "docker network create ${localWorkspaceFolderBasename} || true",
 
   // Let the container default entrypoint to take over.
   "overrideCommand": false,
@@ -51,6 +91,6 @@
   "runArgs": [
     "--env-file",
     ".devcontainer/devcontainer.env",
-    "--network=${workspaceFolderBasename}"
+    "--network=${localWorkspaceFolderBasename}"
   ]
 }
