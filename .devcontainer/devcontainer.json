@@ -1,0 +1,56 @@
+// For format details, see https://aka.ms/devcontainer.json.
+{
+  "name": "Drupal-dev",
+  "image": "insready/drupal-commerce:8-dev",
+  // The order of the files is important since later files override previous ones
+  // "dockerComposeFile": ["../docker-compose.yml", "docker-compose.extend.yml"],
+
+  // Set *default* container specific settings.json values on container create.
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash",
+    "php.validate.executablePath": "/usr/local/bin/php"
+  },
+
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "felixfbecker.php-debug",
+    "bmewburn.vscode-intelephense-client",
+    "mrmlnc.vscode-apache",
+    "whatwedo.twig",
+    "ikappas.composer",
+    "dmitrydorofeev.empty-indent",
+    "42crunch.vscode-openapi",
+    "neilbrayfield.php-docblocker",
+    "persoderlind.vscode-phpcbf",
+    "shevaua.phpcs",
+    "humao.rest-client",
+    "mrmlnc.vscode-scss",
+    "irongeek.vscode-env",
+  ],
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [],
+  "appPort": [
+    "80:80"
+  ],
+
+  // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+  // "remoteUser": "root",
+
+  "workspaceMount": "source=${localWorkspaceFolder},target=/opt/drupal,type=bind,consistency=delegated",
+  "workspaceFolder": "/opt/drupal",
+
+  // Create a default network for the project if it doesn't exist.
+  "initializeCommand": "docker network create ${workspaceFolderBasename} || true",
+
+  // Let the container default entrypoint to take over.
+  "overrideCommand": false,
+
+  // Reference env variables in a dedicated file.
+  // Also specify the project default network.
+  "runArgs": [
+    "--env-file",
+    ".devcontainer/devcontainer.env",
+    "--network=${workspaceFolderBasename}"
+  ]
+}
