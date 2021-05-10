@@ -64,8 +64,8 @@
     "persoderlind.vscode-phpcbf",
     "shevaua.phpcs",
     "humao.rest-client",
-    "mrmlnc.vscode-scss",
     "irongeek.vscode-env",
+    "calebporzio.better-phpunit"
   ],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -75,7 +75,7 @@
   ],
 
   // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-  // "remoteUser": "root",
+  "remoteUser": "www-data",
 
   "workspaceMount": "source=${localWorkspaceFolder},target=/opt/drupal,type=bind,consistency=delegated",
   "workspaceFolder": "/opt/drupal",
