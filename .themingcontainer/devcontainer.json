@@ -14,7 +14,8 @@
       "dmitrydorofeev.empty-indent",
       "mrmlnc.vscode-scss",
       "irongeek.vscode-env",
-      "dbaeumer.vscode-eslint"
+      "dbaeumer.vscode-eslint",
+      "mrmlnc.vscode-scss"
     ],
 
     // Use 'forwardPorts' to make a list of ports inside the container available locally.
