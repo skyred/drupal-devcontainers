@@ -8,7 +8,6 @@
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
-    "php.validate.executablePath": "/usr/local/bin/php",
     /* https://www.drupal.org/docs/develop/development-tools/configuring-visual-studio-code */
     "breadcrumbs.enabled": true,
     "css.validate": true,
@@ -46,9 +45,17 @@
     /* PHPCS */
     "phpcs.enable": true,
     "phpcs.standard": "Drupal,DrupalPractice",
+    /* PHPCBF */
+    "phpcbf.standard": "Drupal",
     /* PHP Docblocks */
     "php-docblocker.gap": true,
-    "php-docblocker.useShortNames": true
+    "php-docblocker.useShortNames": true,
+    // Intelephense only: For Drupal compliant braces formatting use:
+    "intelephense.format.braces": "k&r",
+    /* PHP Validation */
+    "php.validate.enable": true,
+    "php.validate.executablePath": "/usr/local/bin/php",
+    "php.validate.run": "onType",
   },
 
   // Add the IDs of extensions you want installed when the container is created.
