@@ -98,6 +98,7 @@
   "runArgs": [
     "--env-file",
     ".devcontainer/devcontainer.env",
-    "--network=${localWorkspaceFolderBasename}"
+    "--network=${localWorkspaceFolderBasename}",
+    "--add-host=host.docker.internal:host-gateway"
   ]
 }
