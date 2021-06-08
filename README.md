@@ -10,6 +10,18 @@ The purpose of this tooling:
 - Using the Docker best practices (micro-service oriented containers architecture) to make local development environment similar to what would be used in the production. This will also increase the composability of the dev environment, so a developer can easily extend the environment, by adding Redis, Mailhog, phpmyadmin, Elasticsearch etc (instead of being dictated by a wrapper tooling like Lando)
 - Using Docker community open sourced images as building blocks rather then opinionated images to increase the maintainability
 
+## Preconfigured:
+
+- Mount your project folder as `/opt/drupal`
+- Open port 80 for hosting the project
+- Xdebug 3 (Debugging requests initialiated on the web or command line)
+- PHP_CodeSniffer (`Drupal` and `DrupalPractice` standards)
+- [Drupal.org recommended vscode settings](https://www.drupal.org/docs/develop/development-tools/configuring-visual-studio-code)
+- A default project specific network (easy to connect with database or other containers)
+- Run commands as `www-data` inside the container
+- Initialize the container with enviroment variables set in `devcontainer.json`
+
+
 ## Prerequisite:
 have `vscode` (with only [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) installed) on your local machine.
 
@@ -24,3 +36,8 @@ There are two devcontainer configuration:
 - `.themingcontainer`: This configuration is for Drupal theming.
   - Copy this folder to your custom theme folder, and rename it to `.devcontainer`
   - Use `vscode` to open the custom theme folder, you will be prompted to open the folder in a container, click yes.
+
+
+## Customization
+
+Not every project should/can be set up in the same way. Once you copy the start-kit to your project, feel free to customize it, and commit to your project repository.
