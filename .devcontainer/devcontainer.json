@@ -96,6 +96,7 @@
   // Reference env variables in a dedicated file.
   // Also specify the project default network.
   "runArgs": [
+    "--name=${localWorkspaceFolderBasename}",
     "--env-file",
     ".devcontainer/devcontainer.env",
     "--network=${localWorkspaceFolderBasename}",
