@@ -8,6 +8,8 @@
   // Set *default* container specific settings.json values on container create.
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
+    // Allow Xdebug to listen to requests from remote (or container)
+    "remote.localPortHost": "allInterfaces",
     /* https://www.drupal.org/docs/develop/development-tools/configuring-visual-studio-code */
     "breadcrumbs.enabled": true,
     "css.validate": true,
