@@ -29,8 +29,8 @@ have `vscode` (with only [Remote - Containers](https://marketplace.visualstudio.
 ## How to use this
 There are two devcontainer configuration:
 
-- `.devcontainer`: This configuration is for backend/PHP Drupal development.
-  - Copy this folder to the root of your project.
+- `.devcontainer` (`D7.devcontainer` is for Drupal 7, `.devcontainer` is for Drupal 8 and above): This configuration is for backend/PHP Drupal development.
+  - Copy this folder to the root of your project (and rename it to `.devcontainer` if needed).
   - Use `vscode` to open the root of your project, you will be prompted to open the folder in a container, click yes.
 
 - `.themingcontainer`: This configuration is for Drupal theming.
