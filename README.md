@@ -39,11 +39,11 @@ There are two devcontainer configuration:
 
 ### The project
     PROJECT_ROOT
-      ├── .devcontainer                                   # The devcontainer for managing Drupal container
-      ├── web                                             # The `web-root` installed by Composer
-      │    └── themes                                     # Drupal theme folder
-      │         └── CUSTOM_THEME                          # Your customer theme folder
-      │               └── .devcontainer                   # The devcontainer for Drupal theming
+      ├── .devcontainer                          # The devcontainer for managing Drupal container
+      ├── web                                    # The `web-root` installed by Composer
+      │    └── themes                            # Drupal theme folder
+      │         └── CUSTOM_THEME                 # Your customer theme folder
+      │               └── .devcontainer          # The devcontainer for Drupal theming
       ├── ...
       └── vendor
 
