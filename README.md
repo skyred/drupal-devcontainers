@@ -69,7 +69,7 @@ Then connect your database to the devcontainer of your project, by typing this c
 
 `docker run --name myadmin -d --link devdb:db -p 8080:80 phpmyadmin`
 
-* If you want to use `mailhog` to intercept all emails in your application for development purpose, you can type:
+* If you want to use [mailhog](https://hub.docker.com/r/mailhog/mailhog) to intercept all emails in your application for development purpose, you can type:
 
 `docker run --name mailhog -p 8025:8025 -d mailhog/mailhog`
 
