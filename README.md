@@ -37,7 +37,7 @@ There are two devcontainer configuration:
   - Copy this folder to your custom theme folder, and rename it to `.devcontainer`
   - Use `vscode` to open the custom theme folder, you will be prompted to open the folder in a container, click yes.
 
-### The project
+#### The project folder struture
     PROJECT_ROOT
       ├── .devcontainer                          # The devcontainer for managing Drupal container
       ├── web                                    # The `web-root` installed by Composer
@@ -51,7 +51,7 @@ There are two devcontainer configuration:
 
 Not every project should/can be set up in the same way. Once you copy the start-kit to your project, feel free to customize it, and commit to your project repository. You can use [dockerComposeFile](https://code.visualstudio.com/docs/remote/create-dev-container#_use-docker-compose) configuration to manage your multi-container application.
 
-## A minimal and simple but extensible configuration
+### A minimal and simple but extensible configuration
 
 By default, the `devcontainer.json` included in this start kit only manages the Drupal application container. In practice, you need another database container (although, you may choose to use SQLite database and stay with one container).
 
