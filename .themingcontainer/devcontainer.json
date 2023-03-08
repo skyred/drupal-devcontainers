@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
-    "name": "Drupal-theming",
+    "name": "${localWorkspaceFolderBasename}",
     "image": "node:lts",
 
     // Set *default* container specific settings.json values on container create.

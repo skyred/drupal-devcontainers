@@ -1,6 +1,6 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
-  "name": "Drupal-dev",
+  "name": "${localWorkspaceFolderBasename}",
   "image": "insready/drupal-commerce:8-dev",
   // The order of the files is important since later files override previous ones
   // "dockerComposeFile": ["../docker-compose.yml", "docker-compose.extend.yml"],
