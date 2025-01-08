@@ -54,6 +54,8 @@
     "php-docblocker.useShortNames": true,
     // Intelephense only: For Drupal compliant braces formatting use:
     "intelephense.format.braces": "k&r",
+    // For Intelephense to recognize MockObject
+    "intelephense.compatibility.preferPsalmPhpstanPrefixedAnnotations": true,
     /* PHP Validation */
     "php.validate.enable": true,
     "php.validate.executablePath": "/usr/local/bin/php",
