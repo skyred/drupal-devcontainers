@@ -1,0 +1,18 @@
+name: shared-dev
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+networks:
+  default:
+    name: shared-dev
+
+volumes:
+  redis_data:

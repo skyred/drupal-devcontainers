@@ -1,0 +1,17 @@
+name: shared-dev
+
+services:
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: devdb
+      PMA_USER: root
+      PMA_PASSWORD: password
+
+networks:
+  default:
+    name: shared-dev

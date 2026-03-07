@@ -1,0 +1,14 @@
+name: shared-dev
+
+services:
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    restart: unless-stopped
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI
+
+networks:
+  default:
+    name: shared-dev

@@ -1,0 +1,21 @@
+name: shared-dev
+
+services:
+  database:
+    image: mariadb:11
+    container_name: devdb
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_DATABASE: drupal
+
+networks:
+  default:
+    name: shared-dev
+
+volumes:
+  db_data:

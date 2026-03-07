@@ -1,0 +1,25 @@
+name: shared-dev
+
+services:
+  solr:
+    image: solr:9
+    container_name: solr
+    restart: unless-stopped
+    ports:
+      - "8983:8983"
+    volumes:
+      - solr_data:/var/solr
+    command:
+      - solr-precreate
+      - drupal
+    # To use a custom Drupal Search API Solr configset, uncomment below:
+    # volumes:
+    #   - solr_data:/var/solr
+    #   - ./configsets/drupal:/opt/solr/server/solr/configsets/drupal
+
+networks:
+  default:
+    name: shared-dev
+
+volumes:
+  solr_data:
