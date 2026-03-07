@@ -2,7 +2,31 @@
 
 > **Tired of Lando/DDev?** This devcontainer starter-kit gives you a faster, more composable, and truly portable Drupal development environment — with your IDE configured automatically.
 
-Open your project folder in VS Code → everything (Xdebug, PHPCS, Drupal coding standards, extensions) is set up for you. No `lando start`. No `ddev config`. Just open and code.
+### ⚡ 30 Seconds to Start
+
+For most Drupal projects, you need exactly **4 commands**:
+
+```bash
+# 1. Clone this repo (one-time — put it alongside your projects)
+git clone https://github.com/aspect-developer/drupal-devcontainers.git
+#    ~/projects/
+#    ├── drupal-devcontainers/    ← this repo
+#    ├── my-drupal-site/
+#    └── another-project/
+
+# 2. Start a shared database (one-time — reuse across all projects)
+cd drupal-devcontainers/shared-dev/database && docker compose up -d
+
+# 3. Copy the devcontainer to your project
+cp -r ../../../drupal-devcontainers/.devcontainer /path/to/my-drupal-site/
+
+# 4. Open in VS Code — click "Reopen in Container" when prompted
+code /path/to/my-drupal-site/
+```
+
+**That's it.** Xdebug, PHPCS, Drupal coding standards, IntelliSense — all configured. No `lando start`. No `ddev config`. Just open and code.
+
+> *Everything below is details, customization, and optional services. The above is all you need to get started.*
 
 ---
 
