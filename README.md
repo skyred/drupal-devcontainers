@@ -15,7 +15,8 @@ Open your project folder in VS Code → everything (Xdebug, PHPCS, Drupal coding
 | **Composability** | Pick exactly the services you need with standard Docker Compose | Opinionated `.lando.yml` recipes | Opinionated `config.yaml` |
 | **Shared Services** | One database/Redis/Solr instance across *all* projects | Each project spins up its own DB | Each project spins up its own DB |
 | **Docker Images** | Use any community/official Docker image | Locked to Lando-specific images | Locked to DDev-specific images |
-| **Reproducibility** | `devcontainer.json` is committed — every dev gets the same IDE | `.lando.yml` configures services only | `config.yaml` configures services only |
+| **Team IDE Consistency** | `devcontainer.json` enforces project-wide IDE settings (tab size, formatting, extensions) — every developer gets the *same* editor config automatically | IDE settings left to each developer; coding style drift is common | IDE settings left to each developer; coding style drift is common |
+| **Reproducibility** | `devcontainer.json` is committed — every dev gets the same IDE *and* runtime environment | `.lando.yml` configures services only, not the IDE | `config.yaml` configures services only, not the IDE |
 | **Resource Usage** | Shared services = fewer containers running | N projects = N×databases, N×webservers | N projects = N×databases, N×webservers |
 
 ### The "IDE as Code" Concept
@@ -33,34 +34,49 @@ New developer onboarding becomes: *clone → open in VS Code → start coding*.
 
 ## Architecture Overview
 
+This setup uses a **two-layer networking model** that separates your project containers from shared infrastructure services.
+
+**Layer 1 — Project containers**: Each Drupal project runs in its own devcontainer with its own isolated Docker network (named after the project folder). This is your PHP + Apache runtime where you write code, run Drush, debug with Xdebug, etc.
+
+**Layer 2 — Shared services**: Common infrastructure (database, search, caching, email) runs as long-lived containers on a single `shared-dev` network. These are started once and reused across all your projects — no need to spin up a new MariaDB container every time you switch projects.
+
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │  YOUR HOST MACHINE                                               │
 │                                                                  │
-│  ┌─────────────────────┐   ┌─────────────────────┐              │
-│  │  Project A          │   │  Project B          │              │
-│  │  ┌───────────────┐  │   │  ┌───────────────┐  │              │
-│  │  │ .devcontainer  │  │   │  │ .devcontainer  │  │              │
-│  │  │ (PHP + Apache) │  │   │  │ (PHP + Apache) │  │              │
-│  │  └───────┬───────┘  │   │  └───────┬───────┘  │              │
-│  │          │ network:  │   │          │ network:  │              │
-│  │          │ project-a │   │          │ project-b │              │
-│  └──────────┼──────────┘   └──────────┼──────────┘              │
+│  ┌─────────────────────┐   ┌─────────────────────┐               │
+│  │  Project A          │   │  Project B          │               │
+│  │  ┌───────────────┐  │   │  ┌───────────────┐  │               │
+│  │  │ .devcontainer │  │   │  │ .devcontainer │  │               │
+│  │  │ (PHP + Apache)│  │   │  │ (PHP + Apache)│  │               │
+│  │  └───────┬───────┘  │   │  └───────┬───────┘  │               │
+│  │          │ network: │   │          │ network: │               │
+│  │          │ project-a│   │          │ project-b│               │
+│  └──────────┼──────────┘   └──────────┼──────────┘               │
 │             │                         │                          │
 │             │  docker network connect │                          │
 │             ▼                         ▼                          │
-│  ┌──────────────────────────────────────────────────────┐       │
-│  │  shared-dev network                                   │       │
-│  │                                                       │       │
-│  │  ┌────────┐ ┌──────┐ ┌─────────┐ ┌───────┐ ┌──────┐ │       │
-│  │  │ devdb  │ │ solr │ │ mailhog │ │ redis │ │ollama│ │       │
-│  │  │MariaDB │ │ 9    │ │         │ │  7    │ │      │ │       │
-│  │  └────────┘ └──────┘ └─────────┘ └───────┘ └──────┘ │       │
-│  └──────────────────────────────────────────────────────┘       │
+│  ┌──────────────────────────────────────────────────────────────┐ │
+│  │  shared-dev network                                          │ │
+│  │                                                              │ │
+│  │  ┌────────┐ ┌──────┐ ┌─────────┐ ┌───────┐ ┌──────┐         │ │
+│  │  │ devdb  │ │ solr │ │ mailhog │ │ redis │ │ollama│  ...    │ │
+│  │  │MariaDB │ │ 9    │ │         │ │  7    │ │      │         │ │
+│  │  └────────┘ └──────┘ └─────────┘ └───────┘ └──────┘         │ │
+│  └──────────────────────────────────────────────────────────────┘ │
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-**Key insight**: Shared services run once on the `shared-dev` network. Each project gets its own network, and you bridge them with a single `docker network connect` command.
+### How it works
+
+1. **Each project creates its own network** automatically when you open it in VS Code (via `initializeCommand` in `devcontainer.json`).
+2. **Shared services are started independently** — you pick only the ones you need. A simple Drupal site might only need `devdb`. A project with full-text search adds `solr`. A headless Drupal + decoupled frontend might need `devdb` + `redis` + `mailhog`.
+3. **You bridge the networks** with `docker network connect YOUR_PROJECT devdb` to give your project access to a shared service. Each project connects only to the services it actually uses.
+4. **Multiple projects share the same service instance**. Project A and Project B both talk to the same `devdb` container — they just use different database names. This is significantly more resource-efficient than Lando or DDev, where each project spins up its own database, webserver, and supporting services.
+
+### Why this matters for multi-project workflows
+
+As developers, we frequently juggle multiple projects. With Lando or DDev, switching between 3 projects means running 3 separate database containers, 3 webservers, and potentially 3 Redis/Solr instances — consuming memory and CPU even when idle. With this devcontainer approach, you run **one** database and **one** of each service, and every project connects to them as needed. Start a service once, use it everywhere.
 
 ---
 
