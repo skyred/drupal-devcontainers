@@ -431,4 +431,4 @@ The devcontainer includes [Drupal.org recommended VS Code settings](https://www.
 
 ## License
 
-GPL-2.0 — See [LICENSE](LICENSE) for details.
+GPL-3.0 — See [LICENSE](LICENSE) for details.
