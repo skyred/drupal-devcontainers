@@ -35,6 +35,7 @@ code /path/to/my-drupal-site/
 | | **Devcontainers** | **Lando** | **DDev** |
 |---|---|---|---|
 | **Performance (Linux)** | Native Docker — no wrapper overhead | Extra abstraction layer | Extra abstraction layer |
+| **Performance (macOS)** | FrankenPHP-based image delivers significant speed gains (see below) | No special file-sync optimization | Mutagen file sync — the one real speed advantage DDev offers on Mac |
 | **IDE Integration** | VS Code runs *inside* the container — full IntelliSense, debugging, linting | IDE runs on host, connects externally | IDE runs on host, connects externally |
 | **Composability** | Pick exactly the services you need with standard Docker Compose | Opinionated `.lando.yml` recipes | Opinionated `config.yaml` |
 | **Shared Services** | One database/Redis/Solr instance across *all* projects | Each project spins up its own DB | Each project spins up its own DB |
@@ -42,6 +43,31 @@ code /path/to/my-drupal-site/
 | **Team IDE Consistency** | `devcontainer.json` enforces project-wide IDE settings (tab size, formatting, extensions) — every developer gets the *same* editor config automatically | IDE settings left to each developer; coding style drift is common | IDE settings left to each developer; coding style drift is common |
 | **Reproducibility** | `devcontainer.json` is committed — every dev gets the same IDE *and* runtime environment | `.lando.yml` configures services only, not the IDE | `config.yaml` configures services only, not the IDE |
 | **Resource Usage** | Shared services = fewer containers running | N projects = N×databases, N×webservers | N projects = N×databases, N×webservers |
+
+### Performance Notes
+
+#### FrankenPHP — Built-in Speed Advantage
+
+The default Docker image used by this devcontainer is based on [FrankenPHP](https://frankenphp.dev/) — a modern PHP application server built on top of Caddy. Unlike traditional Apache + mod_php or Nginx + PHP-FPM setups, FrankenPHP:
+
+- Serves PHP directly with **no reverse-proxy overhead**
+- Supports **worker mode** — keeping your Drupal application in memory between requests (dramatically reducing bootstrap time)
+- Handles **HTTP/2 and HTTP/3** out of the box
+- Provides **automatic HTTPS** via Caddy
+
+This means your local Drupal development environment is not only simpler but measurably faster than traditional LAMP stacks used by Lando and DDev.
+
+#### What About macOS? The Mutagen Question
+
+Let's be honest: DDev's [Mutagen](https://mutagen.io/) integration is the **one genuine advantage** it offers for macOS users. Docker on macOS suffers from slow file I/O due to the Linux VM layer, and Mutagen solves this by syncing files bidirectionally rather than using bind mounts.
+
+This devcontainer setup does not yet include Mutagen support. However:
+
+- **On Linux**, this is irrelevant — bind mounts are native-speed, and this devcontainer setup is already significantly faster than both Lando and DDev.
+- **On macOS**, the FrankenPHP worker mode partially compensates by reducing the number of file reads per request (the application stays in memory).
+- Docker Desktop's [VirtioFS file sharing](https://docs.docker.com/desktop/settings-and-maintenance/settings/#general) (default since Docker Desktop 4.15) has also dramatically narrowed the macOS performance gap.
+
+> If you're on macOS and file I/O performance is critical, DDev + Mutagen may still edge out on raw filesystem operations. For everything else — IDE integration, composability, shared services, team consistency — devcontainers win.
 
 ### The "IDE as Code" Concept
 
