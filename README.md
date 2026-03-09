@@ -34,8 +34,7 @@ code /path/to/my-drupal-site/
 
 | | **Devcontainers** | **Lando** | **DDev** |
 |---|---|---|---|
-| **Performance (Linux)** | Native Docker — no wrapper overhead | Extra abstraction layer | Extra abstraction layer |
-| **Performance (macOS)** | FrankenPHP-based image delivers significant speed gains (see below) | No special file-sync optimization | Mutagen file sync — the one real speed advantage DDev offers on Mac |
+| **Performance** | Native Docker — no wrapper overhead | Extra abstraction layer | Extra abstraction layer |
 | **IDE Integration** | VS Code runs *inside* the container — full IntelliSense, debugging, linting | IDE runs on host, connects externally | IDE runs on host, connects externally |
 | **Composability** | Pick exactly the services you need with standard Docker Compose | Opinionated `.lando.yml` recipes | Opinionated `config.yaml` |
 | **Shared Services** | One database/Redis/Solr instance across *all* projects | Each project spins up its own DB | Each project spins up its own DB |
