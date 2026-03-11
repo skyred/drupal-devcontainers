@@ -1,85 +1,88 @@
 // For format details, see https://aka.ms/devcontainer.json.
 {
   "name": "${localWorkspaceFolderBasename}",
-  "image": "insready/drupal-commerce:frankenphp",
+  "image": "insready/drupal-dev:frankenphp",
   // The order of the files is important since later files override previous ones
   // "dockerComposeFile": ["../docker-compose.yml", "docker-compose.extend.yml"],
   // Set *default* container specific settings.json values on container create.
-  "settings": {
-    "terminal.integrated.shell.linux": "/bin/bash",
-    // Allow Xdebug to listen to requests from remote (or container)
-    "remote.localPortHost": "allInterfaces",
-    /* https://www.drupal.org/docs/develop/development-tools/configuring-visual-studio-code */
-    "breadcrumbs.enabled": true,
-    "css.validate": true,
-    "diffEditor.ignoreTrimWhitespace": false,
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.formatOnPaste": true,
-    "editor.formatOnSave": false,
-    "editor.renderWhitespace": "boundary",
-    "editor.wordWrapColumn": 80,
-    "editor.wordWrap": "off",
-    "editor.detectIndentation": true,
-    "editor.rulers": [
-      80
-    ],
-    "files.associations": {
-      "*.inc": "php",
-      "*.module": "php",
-      "*.install": "php",
-      "*.theme": "php",
-      "*.tpl.php": "php",
-      "*.test": "php",
-      "*.php": "php",
-      "*.info": "ini"
-    },
-    "files.trimTrailingWhitespace": true,
-    "files.insertFinalNewline": true,
-    "html.format.enable": true,
-    "html.format.wrapLineLength": 80,
-    "telemetry.enableTelemetry": false,
-    /* Empty Indent */
-    "emptyIndent.removeIndent": true,
-    "emptyIndent.highlightIndent": false,
-    "emptyIndent.highlightColor": "rgba(246,36,89,0.6)",
-    /* PHPCS */
-    "phpcs.enable": true,
-    "phpcs.standard": "Drupal,DrupalPractice",
-    /* PHPCBF */
-    "phpcbf.standard": "Drupal",
-    /* PHP Docblocks */
-    "php-docblocker.gap": true,
-    "php-docblocker.useShortNames": true,
-    // Intelephense only: For Drupal compliant braces formatting use:
-    "intelephense.format.braces": "k&r",
-    // For Intelephense to recognize MockObject
-    "intelephense.compatibility.preferPsalmPhpstanPrefixedAnnotations": true,
-    /* PHP Validation */
-    "php.validate.enable": true,
-    "php.validate.executablePath": "/usr/local/bin/php",
-    "php.validate.run": "onType",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        // Allow Xdebug to listen to requests from remote (or container)
+        "remote.localPortHost": "allInterfaces",
+        /* https://www.drupal.org/docs/develop/development-tools/configuring-visual-studio-code */
+        "breadcrumbs.enabled": true,
+        "css.validate": true,
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.tabSize": 2,
+        "editor.insertSpaces": true,
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": false,
+        "editor.renderWhitespace": "boundary",
+        "editor.wordWrapColumn": 80,
+        "editor.wordWrap": "off",
+        "editor.detectIndentation": true,
+        "editor.rulers": [
+          80
+        ],
+        "files.associations": {
+          "*.inc": "php",
+          "*.module": "php",
+          "*.install": "php",
+          "*.theme": "php",
+          "*.tpl.php": "php",
+          "*.test": "php",
+          "*.php": "php",
+          "*.info": "ini"
+        },
+        "files.trimTrailingWhitespace": true,
+        "files.insertFinalNewline": true,
+        "html.format.enable": true,
+        "html.format.wrapLineLength": 80,
+        "telemetry.enableTelemetry": false,
+        /* Empty Indent */
+        "emptyIndent.removeIndent": true,
+        "emptyIndent.highlightIndent": false,
+        "emptyIndent.highlightColor": "rgba(246,36,89,0.6)",
+        /* PHPCS */
+        "phpcs.enable": true,
+        "phpcs.standard": "Drupal,DrupalPractice",
+        /* PHPCBF */
+        "phpcbf.standard": "Drupal",
+        /* PHP Docblocks */
+        "php-docblocker.gap": true,
+        "php-docblocker.useShortNames": true,
+        // Intelephense only: For Drupal compliant braces formatting use:
+        "intelephense.format.braces": "k&r",
+        /* PHP Validation */
+        "php.validate.enable": true,
+        "php.validate.executablePath": "/usr/local/bin/php",
+        "php.validate.run": "onType"
+      },
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "xdebug.php-debug",
+        "bmewburn.vscode-intelephense-client",
+        "mrmlnc.vscode-apache",
+        "whatwedo.twig",
+        "ikappas.composer",
+        "dmitrydorofeev.empty-indent",
+        "42crunch.vscode-openapi",
+        "neilbrayfield.php-docblocker",
+        "persoderlind.vscode-phpcbf",
+        "shevaua.phpcs",
+        "humao.rest-client",
+        "irongeek.vscode-env",
+        "calebporzio.better-phpunit"
+      ]
+    }
   },
-  // Add the IDs of extensions you want installed when the container is created.
-  "extensions": [
-    "xdebug.php-debug",
-    "bmewburn.vscode-intelephense-client",
-    "mrmlnc.vscode-apache",
-    "whatwedo.twig",
-    "ikappas.composer",
-    "dmitrydorofeev.empty-indent",
-    "42crunch.vscode-openapi",
-    "neilbrayfield.php-docblocker",
-    "persoderlind.vscode-phpcbf",
-    "shevaua.phpcs",
-    "humao.rest-client",
-    "irongeek.vscode-env",
-    "calebporzio.better-phpunit"
-  ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [],
   "appPort": [
-    "80:80"
+    "80:80",
+    "9003:9003"
   ],
   // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "www-data",
@@ -95,7 +98,12 @@
     "--name=${localWorkspaceFolderBasename}",
     "--env-file",
     ".devcontainer/devcontainer.env",
-    "--network=${localWorkspaceFolderBasename}",
-    "--add-host=host.docker.internal:host-gateway"
+    "--network=shared-dev",
+    "--add-host=host.docker.internal:host-gateway",
+    // Enable HTTP/3:
+    "-p",
+    "443:443/tcp",
+    "-p",
+    "443:443/udp"
   ]
 }
